@@ -14,6 +14,9 @@ final class Work: Codable {
     var title: String
     var authorId: Author.ID
     
+    var createdAt: Date?
+    var updatedAt: Date?
+    
     init(workId:Int? = nil, title:String, authorId:Author.ID) {
         self.workId = workId
         self.title = title
@@ -33,6 +36,16 @@ extension Work {
     }
 }
 
+extension Work: Validatable {
+    /// See `Validatable`.
+    static func validations() throws -> Validations<Work> {
+        var validations = Validations(Work.self)
+        // title must be at least 1 character
+        try validations.add(\.title, .count(1...))
+        return validations
+    }
+}
+
 // Allows `Work` to be used as a dynamic migration.
 extension Work: Migration {
     static func prepare(on conn: PostgreSQLConnection) -> Future<Void> {
@@ -41,7 +54,6 @@ extension Work: Migration {
             builder.reference(from: \.authorId, to: \Author.authorId)
         }
     }
-    
 }
 
 /// Allows `Work` to be encoded to and decoded from HTTP messages.

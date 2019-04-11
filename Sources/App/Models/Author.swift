@@ -33,6 +33,18 @@ extension Author {
     }
 }
 
+extension Author: Validatable {
+    /// See `Validatable`.
+    static func validations() throws -> Validations<Author> {
+        var validations = Validations(Author.self)
+        // first name must be at least 1 character
+        try validations.add(\.firstName, .count(1...))
+        // last name must be at least 1 character
+        try validations.add(\.lastName, .count(1...))
+        return validations
+    }
+}
+
 // Allows `Author` to be used as a dynamic migration.
 extension Author: Migration { }
 /// Allows `Author` to be encoded to and decoded from HTTP messages.
