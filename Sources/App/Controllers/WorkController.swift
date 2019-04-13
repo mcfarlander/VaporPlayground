@@ -17,6 +17,7 @@ final class WorkdController: RouteCollection {
         works.get(Work.parameter, use: show)
         works.post(Work.self, use: create)
         works.put(Work.parameter, use: update)
+        works.delete(Work.parameter, use: delete)
         
         works.get(Work.parameter, "author", use: getAuthor)
 
@@ -42,13 +43,16 @@ final class WorkdController: RouteCollection {
         }
     }
     
+    func delete(_ request: Request)throws -> Future<HTTPStatus> {
+        return try request.parameters.next(Work.self).delete(on: request).transform(to: .noContent)
+    }
+    
     func getAuthor(_ req: Request) throws -> Future<Author> {
         return try req.parameters.next(Work.self).flatMap(to: Author.self) { (work) in
             return work.author.get(on: req)
         }
     }
     
-
 }
 
 

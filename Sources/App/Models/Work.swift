@@ -21,6 +21,8 @@ final class Work: Codable {
         self.workId = workId
         self.title = title
         self.authorId = authorId
+        self.createdAt = Date()
+        self.updatedAt = Date()
     }
 }
 

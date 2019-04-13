@@ -10,7 +10,7 @@ import Vapor
 import FluentPostgreSQL
 import Authentication
 
-struct UserToken: Codable {
+final class UserToken: Codable {
     var id: Int?
     var string: String
     var userID: User.ID

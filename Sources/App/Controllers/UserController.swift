@@ -16,7 +16,7 @@ final class UserController: RouteCollection {
         users.get(use: list)
         users.get(User.parameter, use: show)
         users.post(User.self, use: create)
-        users.patch(UserContent.self, at: User.parameter, use: update)
+        users.put(User.parameter, use: update)
         users.delete(User.parameter, use: delete)
         
     }
@@ -33,13 +33,12 @@ final class UserController: RouteCollection {
         return user.save(on: request)
     }
     
-    func update(_ request: Request, _ body: UserContent)throws -> Future<User> {
-        let user = try request.parameters.next(User.self)
-        return user.map(to: User.self, { user in
-            //user.name = body.name ?? user.name
-            //user.email = body.email ?? user.email
-            return user
-        }).update(on: request)
+    func update(_ req: Request) throws -> Future<User> {
+        return try flatMap(to: User.self, req.parameters.next(User.self), req.content.decode(User.self)) { (user, updatedUser) in
+            user.name = updatedUser.name
+            user.email = updatedUser.email
+            return user.save(on: req)
+        }
     }
     
     func delete(_ request: Request)throws -> Future<HTTPStatus> {

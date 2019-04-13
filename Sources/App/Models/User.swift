@@ -10,7 +10,7 @@ import Vapor
 import FluentPostgreSQL
 import Authentication
 
-struct User: Codable {
+final class User: Codable {
     var id: Int?
     var name: String
     var email: String
@@ -37,9 +37,4 @@ extension User: Parameter { }
 extension User: TokenAuthenticatable {
     /// See `TokenAuthenticatable`.
     typealias TokenType = UserToken
-}
-
-struct UserContent: Content {
-    var name: String?
-    var email: String?
 }
