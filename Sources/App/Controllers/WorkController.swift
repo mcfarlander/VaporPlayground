@@ -8,7 +8,7 @@
 import Foundation
 import Vapor
 
-final class WorkdController: RouteCollection {
+final class WorkController: RouteCollection {
     
     func boot(router: Router) throws {
         let works = router.grouped("works")

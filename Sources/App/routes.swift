@@ -21,7 +21,7 @@ public func routes(_ router: Router) throws {
     }
     
     try router.register(collection: AuthorController())
-    try router.register(collection: WorkdController())
+    try router.register(collection: WorkController())
     try router.register(collection: WeatherController())
 
 }
