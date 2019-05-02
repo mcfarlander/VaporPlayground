@@ -9,21 +9,12 @@ import Foundation
 import Vapor
 import HTTP
 
-struct Todo: Codable {
-    var userId:Int
-    var id:Int
-    var title:String
-    var completed:Bool
-}
-
-extension Todo: Content { }
-
-final class WeatherController: RouteCollection {
+final class TodoController: RouteCollection {
     
     func boot(router: Router) throws {
         
-        let weather = router.grouped("weather")
-        weather.get(use: get)
+        let todoGroup = router.grouped("todos")
+        todoGroup.get(use: get)
         
     }
     
@@ -37,8 +28,6 @@ final class WeatherController: RouteCollection {
             print(response.content)
             return try response.content.decode(Todo.self)
         }
-
-        // return "this sucks"
         
     }
     
