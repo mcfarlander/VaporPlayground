@@ -15,4 +15,15 @@ struct Todo: Codable {
     var completed:Bool
 }
 
+/// Allows `Todo` to be encoded to and decoded from HTTP messages.
 extension Todo: Content { }
+
+/// Allows `Todo` to be used as a dynamic parameter in route definitions.
+extension Todo: Parameter {
+    
+    static func resolveParameter(_ parameter: String, on container: Container) throws -> Int {
+        return Int(parameter)!
+    }
+    
+    typealias ResolvedParameter = Int
+}
