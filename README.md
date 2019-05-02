@@ -3,14 +3,12 @@
     <br>
     <br>
     
-    <p>
     A playground for all things Vapor, a server-side Swift framework.
-    </p>
+    <br>
     
-    <p>
     This project uses Fluent to connect to a PostgreSQL database running locally. It has a true
     REST API template. Vapor features are integrated into the project as working examples.
-    </p>
+    <br>
     
     <a href="http://docs.vapor.codes/3.0/">
         <img src="http://img.shields.io/badge/read_the-docs-2196f3.svg" alt="Documentation">
