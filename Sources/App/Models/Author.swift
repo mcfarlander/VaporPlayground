@@ -9,6 +9,8 @@ import Foundation
 import FluentPostgreSQL
 import Vapor
 
+/// Author model, with children of type Work.
+/// Author is a PostgreSQL table in the Book database.
 final class Author:Codable {
     var authorId: Int?
     var firstName: String

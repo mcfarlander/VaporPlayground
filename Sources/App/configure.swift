@@ -10,6 +10,12 @@ import FluentPostgreSQL
 import Vapor
 
 /// Called before your application initializes.
+///
+/// - Parameters:
+///   - config: the configuration of the application
+///   - env: the environment for the application (test, prod, etc)
+///   - services: the services of the application
+/// - Throws: any error during startup
 public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
     
     // Register providers first
@@ -45,5 +51,11 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     
     // register Authentication provider
     try services.register(AuthenticationProvider())
+    
+    /// Create a `CommandConfig` with default commands.
+    var commandConfig = CommandConfig.default()
+    commandConfig.use(CowsayCommand(), as: "cowsay")
+    services.register(commandConfig)
+    
     
 }

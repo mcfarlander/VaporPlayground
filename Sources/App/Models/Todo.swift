@@ -8,6 +8,8 @@
 import Foundation
 import Vapor
 
+/// Todo model. This model is used to interact with the remote web service
+/// defined in the TodoController controller.
 struct Todo: Codable {
     var userId:Int
     var id:Int

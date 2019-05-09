@@ -8,11 +8,14 @@
 import Vapor
 
 /// Register your application's routes here.
+///
+/// - Parameter router: the router (defined routes)
+/// - Throws: any error while setting the routes
 public func routes(_ router: Router) throws {
     
     // Basic "It works" example
     router.get { req in
-        return "It works!"
+        return "Vapor Playground!"
     }
     
     // Basic "Hello, world!" example
@@ -20,6 +23,7 @@ public func routes(_ router: Router) throws {
         return "Hello, world!"
     }
     
+    // actual routes defined in the controllers !!!
     try router.register(collection: AuthorController())
     try router.register(collection: WorkController())
     try router.register(collection: TodoController())

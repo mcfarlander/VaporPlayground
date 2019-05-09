@@ -11,10 +11,14 @@ let package = Package(
         .package(url: "https://github.com/vapor/fluent-postgresql.git", from: "1.0.0"),
 
 	    // 👤 Authentication and Authorization framework for Fluent.
-        .package(url: "https://github.com/vapor/auth.git", from: "2.0.0")
+        .package(url: "https://github.com/vapor/auth.git", from: "2.0.0"),
+        
+        /// 💻 APIs for creating interactive CLI tools.
+        .package(url: "https://github.com/vapor/console.git", from: "3.0.0"),
+        
     ],
     targets: [
-        .target(name: "App", dependencies: ["FluentPostgreSQL", "Vapor", "Authentication"]),
+        .target(name: "App", dependencies: ["FluentPostgreSQL", "Vapor", "Authentication", "Command", "Logging"]),
         .target(name: "Run", dependencies: ["App"]),
         .testTarget(name: "AppTests", dependencies: ["App"])
     ]
