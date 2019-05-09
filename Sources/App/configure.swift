@@ -8,6 +8,7 @@
 import Authentication
 import FluentPostgreSQL
 import Vapor
+import SwiftyBeaverProvider
 
 /// Called before your application initializes.
 ///
@@ -31,10 +32,32 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     // middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
     services.register(middlewares)
+    
+    // Configure SwiftyBeaver (logging)
+    
+    // Setup your destinations
+    let console = ConsoleDestination()
+    console.minLevel = .debug // update properties according to your needs
+    
+    let fileDestination = FileDestination()
+    
+    // Register the logger
+    services.register(SwiftyBeaverLogger(destinations: [console, fileDestination]), as: Logger.self)
+    
+    // Optional
+    config.prefer(SwiftyBeaverLogger.self, for: Logger.self)
+    
 
     // Configure a Postgres database
-    let config = PostgreSQLDatabaseConfig(hostname: "localhost", port: 5432, username: "postgres", database: "book", password: "postgres", transport: .cleartext)
-    let postgres = PostgreSQLDatabase(config: config)
+    let configDatabase = PostgreSQLDatabaseConfig(
+        hostname: "localhost",
+        port: 5432,
+        username: "postgres",
+        database: "book",
+        password: "postgres",
+        transport: .cleartext)
+    
+    let postgres = PostgreSQLDatabase(config: configDatabase)
 
     // Register the configured SQLite database to the database config.
     var databases = DatabasesConfig()

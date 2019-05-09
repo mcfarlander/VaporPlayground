@@ -16,9 +16,11 @@ let package = Package(
         /// 💻 APIs for creating interactive CLI tools.
         .package(url: "https://github.com/vapor/console.git", from: "3.0.0"),
         
+        .package(url: "https://github.com/vapor-community/swiftybeaver-provider.git", from: "3.0.0"),
+        
     ],
     targets: [
-        .target(name: "App", dependencies: ["FluentPostgreSQL", "Vapor", "Authentication", "Command", "Logging"]),
+        .target(name: "App", dependencies: ["FluentPostgreSQL", "Vapor", "Authentication", "Command", "Logging", "SwiftyBeaverProvider"]),
         .target(name: "Run", dependencies: ["App"]),
         .testTarget(name: "AppTests", dependencies: ["App"])
     ]
