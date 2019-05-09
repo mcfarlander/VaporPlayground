@@ -2,7 +2,7 @@
 //  WeatherController.swift
 //  App
 //
-//  Created by iMac 21inch on 4/21/19.
+//  Created by Dave Johnson on 4/21/19.
 //
 
 import Foundation

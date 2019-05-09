@@ -1,9 +1,13 @@
 <p>
-A playground for all things Vapor, a server-side Swift framework.
-<br>
+A playground for all things Vapor, a server-side Swift framework. Vapor is in continuous development. 
+This playground was developed to be a starting point of working code based on the documentation, 
+StackOverflow articles, and various other useful resources found on the internet.
+<br><br>
+
 This project uses Fluent to connect to a PostgreSQL database running locally. It has a true
 REST API template. Vapor features are integrated into the project as working examples.
-<br>
+<br><br>
+
 Installation notes:
 <ul>
 <li>Install homebrew</li>
@@ -13,9 +17,6 @@ Installation notes:
 <li>Run via xcode, change the environment (port, host) as necessary</li>
 </ul>
 <br><br>
-Vapor is in continuous development. This playground was developed to be a starting point of
-working code based on the documentation, StackOverflow articles, and various other useful
-resources found on the internet.
 </p>
 
 <p align="center">

@@ -2,7 +2,7 @@
 //  CowsayCommand.swift
 //  App
 //
-//  Created by iMac 21inch on 5/4/19.
+//  Created by Dave Johnson on 5/4/19.
 //
 
 import Foundation
