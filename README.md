@@ -3,7 +3,20 @@ A playground for all things Vapor, a server-side Swift framework.
 <br>
 This project uses Fluent to connect to a PostgreSQL database running locally. It has a true
 REST API template. Vapor features are integrated into the project as working examples.
-<p>
+<br>
+Installation notes:
+<ul>
+<li>Install homebrew</li>
+<li>Use homebrew to install vapor according to the getting started docs</li>
+<li>Install PostgreSQL (download the standalone app). Run the instance.</li>
+<li>Verify the database and port as per the configuration in config.swift</li>
+<li>Run via xcode, change the environment (port, host) as necessary</li>
+</ul>
+<br><br>
+Vapor is in continuous development. This playground was developed to be a starting point of
+working code based on the documentation, StackOverflow articles, and various other useful
+resources found on the internet.
+</p>
 
 <p align="center">
     <img src="https://user-images.githubusercontent.com/1342803/36623515-7293b4ec-18d3-11e8-85ab-4e2f8fb38fbd.png" width="320" alt="API Template">
@@ -22,6 +35,6 @@ REST API template. Vapor features are integrated into the project as working exa
         <img src="https://circleci.com/gh/vapor/api-template.svg?style=shield" alt="Continuous Integration">
     </a>
     <a href="https://swift.org">
-        <img src="http://img.shields.io/badge/swift-4.1-brightgreen.svg" alt="Swift 4.1">
+        <img src="http://img.shields.io/badge/swift-4.2-brightgreen.svg" alt="Swift 4.2">
     </a>
 </p>
