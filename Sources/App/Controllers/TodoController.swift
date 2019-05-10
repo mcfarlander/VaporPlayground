@@ -8,6 +8,7 @@
 import Foundation
 import Vapor
 import HTTP
+import SwiftyBeaverProvider
 
 /// A controller to demonstrate interactions with a remote service. The controller
 /// will interact with the TODO example web service to get a list of Todo objects.
@@ -52,21 +53,26 @@ final class TodoController: RouteCollection {
     /// - Returns: the specific Todo from the remote service
     /// - Throws: any error
     func show(_ request: Request) throws -> Future<Todo> {
+		
+		// Get a logger instance
+		let logger: Logger = try request.make(SwiftyBeaverLogger.self)
 
         // 1. create a client
+		logger.debug("create an http client")
         let client = try request.make(Client.self)
         
         // 2. get the parameter from THIS request
         let todoNumber = try request.parameters.next(Todo.self)
+		logger.debug("the parameter is: \(todoNumber)")
         
         // 3. create a URL for the REMOTE service
         let response = client.get(baseUrl + "/" + String(todoNumber))
         
         // 4. perform the GET and map back to a object to view from THIS server
-        
+		
         // Transforms the `Future<Response>` to `Future<Todo>`
         return response.flatMap(to: Todo.self) { response in
-            print(response.content)
+            // print(response)
             return try response.content.decode(Todo.self)
         }
         

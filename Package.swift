@@ -15,7 +15,8 @@ let package = Package(
         
         /// 💻 APIs for creating interactive CLI tools.
         .package(url: "https://github.com/vapor/console.git", from: "3.0.0"),
-        
+		
+		/// See https://github.com/vapor-community/swiftybeaver-provider
         .package(url: "https://github.com/vapor-community/swiftybeaver-provider.git", from: "3.0.0"),
         
     ],

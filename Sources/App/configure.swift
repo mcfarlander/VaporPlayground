@@ -18,6 +18,10 @@ import SwiftyBeaverProvider
 ///   - services: the services of the application
 /// - Throws: any error during startup
 public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
+	
+	// Define the configuration directory to the project
+	let directory = DirectoryConfig.detect()
+	let configDir = "Sources/App/Config"
     
     // Register providers first
     try services.register(FluentPostgreSQLProvider())
@@ -35,20 +39,20 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     
     // Configure SwiftyBeaver (logging)
     
-    // Setup your destinations
+	// Setup your destinations: console and file
+	// TODO: make the configuration of the logs more dynamic
     let console = ConsoleDestination()
-    console.minLevel = .debug // update properties according to your needs
-    
-    let fileDestination = FileDestination()
-    
+    console.minLevel = .debug 				// update properties according to your needs
+
+	let file = FileDestination()  			// log to file
+	file.logFileURL = URL(string: "file:///Users/dave/logs/VaporLogs.log")! // change this to set log file!
+
     // Register the logger
-    services.register(SwiftyBeaverLogger(destinations: [console, fileDestination]), as: Logger.self)
-    
-    // Optional
-    config.prefer(SwiftyBeaverLogger.self, for: Logger.self)
-    
+    services.register(SwiftyBeaverLogger(destinations: [console, file]), as: Logger.self)
+
 
     // Configure a Postgres database
+	// TODO: change the config to an external JSON file!
     let configDatabase = PostgreSQLDatabaseConfig(
         hostname: "localhost",
         port: 5432,
@@ -56,8 +60,12 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
         database: "book",
         password: "postgres",
         transport: .cleartext)
-    
-    let postgres = PostgreSQLDatabase(config: configDatabase)
+	
+//	let configPostgresUrl = URL(fileURLWithPath: directory.workDir)
+//		.appendingPathComponent(configDir, isDirectory: true).appendingPathComponent("postgres.json").path
+//
+//	let configPostgres = PostgreSQLDatabaseConfig(url: configPostgresUrl, transport: .cleartext)
+	let postgres = PostgreSQLDatabase(config: configDatabase)
 
     // Register the configured SQLite database to the database config.
     var databases = DatabasesConfig()
