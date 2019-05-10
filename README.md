@@ -13,7 +13,7 @@ Installation notes:
 <li>Install homebrew</li>
 <li>Use homebrew to install vapor according to the getting started docs</li>
 <li>Install PostgreSQL (download the standalone app). Run the instance.</li>
-<li>Regenerate the xcode project accorinding to the vapor getting started docs</li>
+<li>Regenerate the xcode project according to the vapor getting started docs</li>
 <li>Verify the database and port as per the configuration in config.swift</li>
 <li>Run via xcode, change the environment (port, host) as necessary</li>
 </ul>
