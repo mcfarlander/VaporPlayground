@@ -13,6 +13,7 @@ import Vapor
 /// - Returns: the application instance
 /// - Throws: error while starting the application
 public func app(_ env: Environment) throws -> Application {
+	
     var config = Config.default()
     var env = env
     var services = Services.default()
@@ -20,4 +21,5 @@ public func app(_ env: Environment) throws -> Application {
     let app = try Application(config: config, environment: env, services: services)
     try boot(app)
     return app
+	
 }
