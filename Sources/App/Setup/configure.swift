@@ -50,21 +50,24 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     services.register(router, as: Router.self)
 
     // Configure SwiftyBeaver (logging)
+	// NOTE: all 3 items MUST be in the swiftybeaver.json file: console, file and platform!
 	try services.register(SwiftyBeaverProvider())
 	config.prefer(SwiftyBeaverLogger.self, for: Logger.self)
+	
+	// If not wanting to use the provider, create one dynamically in code shown here
     
-//	// Setup your destinations: console and file
-//	// TODO: make the configuration of the logs more dynamic
-//    let console = ConsoleDestination()
-//    console.minLevel = .debug 				// update properties according to your needs
-//
-//	// Create an environment variable in the Edit Schemes... named LOG_FILE_PATH
-//	// and set it to a URI which can be reached. Check errors in console which will indicate where the problem is.
-//	let file = FileDestination()  			// log to file
-//	file.logFileURL = URL(string: Environment.get("LOG_FILE_PATH")!)
-//
-//    // Register the logger
-//    services.register(SwiftyBeaverLogger(destinations: [console, file]), as: Logger.self)
+	//	// Setup your destinations: console and file
+	//	// TODO: make the configuration of the logs more dynamic
+	//    let console = ConsoleDestination()
+	//    console.minLevel = .debug
+	//
+	//	// Create an environment variable in the Edit Schemes... named LOG_FILE_PATH
+	//	// and set it to a URI which can be reached. Check errors in console which will indicate where the problem is.
+	//	let file = FileDestination()  			// log to file
+	//	file.logFileURL = URL(string: Environment.get("LOG_FILE_PATH")!)
+	//
+	//    // Register the logger
+	//    services.register(SwiftyBeaverLogger(destinations: [console, file]), as: Logger.self)
 
     
     // register Authentication provider
