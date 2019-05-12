@@ -1,0 +1,19 @@
+[
+	{
+		"type": "console",
+		"format": " $Dyyyy-MM-dd HH:mm:ss.SSS$d $C$L$c: $M",
+		"minLevel": "debug"
+	},
+	{
+		"type": "file",
+		"format": "$J",
+		"minLevel": "debug",
+		"path": "/Users/dave/logs/VaporPlayground.log"
+	},
+	{
+		"type": "platform",
+		"app": "YOUR_APP_ID",
+		"secret": "YOUR_SECRET_ID",
+		"key": "YOUR_ENCRYPTION_KEY"
+	}
+]
