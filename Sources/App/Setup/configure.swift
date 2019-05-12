@@ -49,19 +49,17 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     try routes(router)
     services.register(router, as: Router.self)
 
-
     // Configure SwiftyBeaver (logging)
-	// Define the configuration directory to the project
-	let directory = DirectoryConfig.detect()
-	let configDir = "Sources/App/Config"
     
 	// Setup your destinations: console and file
 	// TODO: make the configuration of the logs more dynamic
     let console = ConsoleDestination()
     console.minLevel = .debug 				// update properties according to your needs
 
+	// Create an environment variable in the Edit Schemes... named LOG_FILE_PATH
+	// and set it to a URI which can be reached. Check errors in console which will indicate where the problem is.
 	let file = FileDestination()  			// log to file
-	file.logFileURL = URL(string: "file:///Users/dave/logs/VaporLogs.log")! // change this to set log file!
+	file.logFileURL = URL(string: Environment.get("LOG_FILE_PATH")!)
 
     // Register the logger
     services.register(SwiftyBeaverLogger(destinations: [console, file]), as: Logger.self)
