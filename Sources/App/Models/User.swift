@@ -11,20 +11,35 @@ import FluentPostgreSQL
 import Authentication
 
 final class User: Codable {
+	
     var id: Int?
-    var name: String
-    var email: String
-    var passwordHash: String
-    
-    var tokens: Children<User, UserToken> {
-        return children(\.userID)
-    }
+    var username: String
+    var password: String
+	
+	init(username: String, password: String) {
+		self.username = username
+		self.password = password
+	}
 }
 
 extension User: Model {
     typealias Database = PostgreSQLDatabase
     typealias ID = Int
     static let idKey: IDKey = \User.id
+}
+
+extension User: PasswordAuthenticatable {
+	static var usernameKey: WritableKeyPath<User, String> {
+		return \User.username
+	}
+	
+	static var passwordKey: WritableKeyPath<User, String> {
+		return \User.password
+	}
+}
+
+extension User: TokenAuthenticatable {
+	typealias TokenType = UserToken
 }
 
 // Allows `User` to be used as a dynamic migration.
@@ -34,7 +49,7 @@ extension User: Content { }
 /// Allows `User` to be used as a dynamic parameter in route definitions.
 extension User: Parameter { }
 
-extension User: TokenAuthenticatable {
-    /// See `TokenAuthenticatable`.
-    typealias TokenType = UserToken
+struct PublicUser: Content {
+	var username: String
+	var token: String
 }

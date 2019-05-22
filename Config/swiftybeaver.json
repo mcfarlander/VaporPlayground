@@ -6,7 +6,7 @@
 	},
 	{
 		"type": "file",
-		"format": " $Dyyyy-MM-dd HH:mm:ss.SSS$d $C$L$c: $M",
+		"format": " $Dyyyy-MM-dd HH:mm:ss.SSS$d $L: $M",
 		"minLevel": "debug",
 		"path": "/Users/dave/logs/VaporPlayground.log"
 	},
