@@ -51,8 +51,8 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 
     // Configure SwiftyBeaver (logging)
 	// NOTE: all 3 items MUST be in the swiftybeaver.json file: console, file and platform!
-	try services.register(SwiftyBeaverProvider())
-	config.prefer(SwiftyBeaverLogger.self, for: Logger.self)
+	//try services.register(SwiftyBeaverProvider())
+	//config.prefer(SwiftyBeaverLogger.self, for: Logger.self)
 	
 	// If not wanting to use the provider, create one dynamically in code shown here
     

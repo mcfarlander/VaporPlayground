@@ -16,7 +16,8 @@ final class User: Codable {
     var username: String
     var password: String
 	
-	init(username: String, password: String) {
+	init(id:Int? = nil, username:String, password:String) {
+		self.id = id
 		self.username = username
 		self.password = password
 	}

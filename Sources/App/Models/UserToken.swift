@@ -16,7 +16,7 @@ final class UserToken: Codable {
 	var token: String
 	var userId: User.ID
 	
-	init(token: String, userId: User.ID) {
+	init(token:String, userId: User.ID) {
 		self.token = token
 		self.userId = userId
 	}
