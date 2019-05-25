@@ -17,6 +17,7 @@ final class UserController: RouteCollection {
         
 		users.post("create", use: create)
 		users.post("login", use: login)
+		users.post("loginWithCreds", use: loginWithCreds)
         
     }
     
@@ -39,16 +40,38 @@ final class UserController: RouteCollection {
 		}
 	}
 	
-	/// Log into the service.
+	/// Log into the service to get the user's name and authorization token.
+	///
+	/// - Parameter request: the request
+	/// - Returns: a future containing the public user
+	/// - Throws: any error
+	func login(_ request: Request) throws -> Future<PublicUser> {
+		
+		// decode the request to a user object
+		return try request.content.decode(User.self).flatMap(to: PublicUser.self) { user in
+			let passwordVerifier = try request.make(BCryptDigest.self)
+			// authenticate on the user name and pasword
+			return User.authenticate(username: user.username, password: user.password, using: passwordVerifier, on: request).unwrap(or: Abort.init(HTTPResponseStatus.unauthorized)).flatMap(to: PublicUser.self) {authorized in
+				// if authenticated get the first token for the this user and return the public user object
+				return try authorized.tokens.query(on: request).first().map(to: PublicUser.self) {usertoken in
+					return PublicUser(username: user.username, token: usertoken!.token)
+				}
+			}
+		}
+		
+	}
+	
+	/// Log into the service to get the user user name and encrypted password.
 	///
 	/// - Parameter request: the request
 	/// - Returns: a future containing the user
 	/// - Throws: any error
-	func login(_ request: Request) throws -> Future<User> {
+	func loginWithCreds(_ request: Request) throws -> Future<User> {
 		return try request.content.decode(User.self).flatMap(to: User.self) { user in
 			let passwordVerifier = try request.make(BCryptDigest.self)
-			return User.authenticate(username: user.username, password: user.password, using: passwordVerifier, on: request).unwrap(or: Abort.init(HTTPResponseStatus.unauthorized)) 
+			return User.authenticate(username: user.username, password: user.password, using: passwordVerifier, on: request).unwrap(or: Abort.init(HTTPResponseStatus.unauthorized))
 		}
 	}
+	
 
 }

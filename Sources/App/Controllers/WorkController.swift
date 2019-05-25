@@ -35,6 +35,7 @@ final class WorkController: RouteCollection {
     /// - Returns: array of Work objects
     /// - Throws: any error
     func list(_ request: Request) throws -> Future<[Work]> {
+		_ = try request.requireAuthenticated(User.self)
         return Work.query(on: request).all()
     }
     
@@ -44,6 +45,7 @@ final class WorkController: RouteCollection {
     /// - Returns: the specific work
     /// - Throws: any error
     func show(_ request: Request) throws -> Future<Work> {
+		_ = try request.requireAuthenticated(User.self)
         return try request.parameters.next(Work.self)
     }
     
@@ -55,6 +57,7 @@ final class WorkController: RouteCollection {
     /// - Returns: the work from the ORM
     /// - Throws: any error
     func create(_ request: Request, work:Work) throws -> Future<Work> {
+		_ = try request.requireAuthenticated(User.self)
         return work.save(on: request)
     }
     
@@ -65,11 +68,12 @@ final class WorkController: RouteCollection {
     ///   - body: the request body work to update
     /// - Returns: the updated work from the ORM
     /// - Throws: any error
-    func update(_ req: Request) throws -> Future<Work> {
-        return try flatMap(to: Work.self, req.parameters.next(Work.self), req.content.decode(Work.self)) { (work, updatedWork) in
+    func update(_ request: Request) throws -> Future<Work> {
+		_ = try request.requireAuthenticated(User.self)
+        return try flatMap(to: Work.self, request.parameters.next(Work.self), request.content.decode(Work.self)) { (work, updatedWork) in
             work.title = updatedWork.title
             work.authorId = updatedWork.authorId
-            return work.save(on: req)
+            return work.save(on: request)
         }
     }
     
@@ -79,20 +83,20 @@ final class WorkController: RouteCollection {
     /// - Returns: HTTP status 200
     /// - Throws: any error
     func delete(_ request: Request)throws -> Future<HTTPStatus> {
+		_ = try request.requireAuthenticated(User.self)
         return try request.parameters.next(Work.self).delete(on: request).transform(to: .noContent)
     }
     
     /// Get the author from the given work: /works/1/author.
     ///
-    /// - Parameter req: the request
+    /// - Parameter request: the request
     /// - Returns: the author from the ORM
     /// - Throws: any error
-    func getAuthor(_ req: Request) throws -> Future<Author> {
-        return try req.parameters.next(Work.self).flatMap(to: Author.self) { (work) in
-            return work.author.get(on: req)
+    func getAuthor(_ request: Request) throws -> Future<Author> {
+		_ = try request.requireAuthenticated(User.self)
+        return try request.parameters.next(Work.self).flatMap(to: Author.self) { (work) in
+            return work.author.get(on: request)
         }
     }
     
 }
-
-

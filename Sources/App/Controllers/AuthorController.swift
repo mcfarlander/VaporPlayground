@@ -44,6 +44,7 @@ final class AuthorController: RouteCollection {
     /// - Returns: the specific author
     /// - Throws: any error
     func show(_ request: Request) throws -> Future<Author> {
+		_ = try request.requireAuthenticated(User.self)
         return try request.parameters.next(Author.self)
     }
     
@@ -55,6 +56,7 @@ final class AuthorController: RouteCollection {
     /// - Returns: the author from the ORM
     /// - Throws: any error
     func create(_ request: Request, author:Author) throws -> Future<Author> {
+		_ = try request.requireAuthenticated(User.self)
         return author.save(on: request)
     }
     
@@ -66,6 +68,7 @@ final class AuthorController: RouteCollection {
     /// - Returns: the updated author from the ORM
     /// - Throws: any error
     func update(_ request: Request, _ body: AuthorContent)throws -> Future<Author> {
+		_ = try request.requireAuthenticated(User.self)
         let author = try request.parameters.next(Author.self)
         return author.map(to: Author.self, { author in
             author.firstName = body.firstName ?? author.firstName
@@ -80,17 +83,19 @@ final class AuthorController: RouteCollection {
     /// - Returns: HTTP status 200
     /// - Throws: any error
     func delete(_ request: Request)throws -> Future<HTTPStatus> {
+		_ = try request.requireAuthenticated(User.self)
         return try request.parameters.next(Author.self).delete(on: request).transform(to: .noContent)
     }
     
     /// Get a list of Work objects related to this author.
     ///
-    /// - Parameter req: the request
+    /// - Parameter request: the request
     /// - Returns: a list of work objects from the ORM
     /// - Throws: any error
-    func getWorks(_ req: Request) throws -> Future<[Work]> {
-        return try req.parameters.next(Author.self).flatMap(to: [Work].self) { (author) in
-            return try author.works.query(on: req).all()
+    func getWorks(_ request: Request) throws -> Future<[Work]> {
+		_ = try request.requireAuthenticated(User.self)
+        return try request.parameters.next(Author.self).flatMap(to: [Work].self) { (author) in
+            return try author.works.query(on: request).all()
         }
     }
     
