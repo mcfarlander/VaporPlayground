@@ -29,6 +29,12 @@ extension User: Model {
     static let idKey: IDKey = \User.id
 }
 
+extension User {
+	var tokens: Children<User, UserToken> {
+		return children(\.id)
+	}
+}
+
 extension User: PasswordAuthenticatable {
 	static var usernameKey: WritableKeyPath<User, String> {
 		return \User.username
@@ -54,3 +60,6 @@ struct PublicUser: Content {
 	var username: String
 	var token: String
 }
+
+/// Global - Use user model to create an authentication middleware
+let tokenAuthMiddleware = User.tokenAuthMiddleware()

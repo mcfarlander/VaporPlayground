@@ -15,7 +15,8 @@ final class AuthorController: RouteCollection {
     /// - Parameter router: the application router
     /// - Throws: any error when defining the routes
     func boot(router: Router) throws {
-        let authors = router.grouped("authors")
+		
+        let authors = router.grouped(tokenAuthMiddleware).grouped("authors")
     
         authors.get(use: list)
         authors.get(Author.parameter, use: show)
@@ -33,6 +34,7 @@ final class AuthorController: RouteCollection {
     /// - Returns: array of Author objects
     /// - Throws: any error
     func list(_ request: Request) throws -> Future<[Author]> {
+		_ = try request.requireAuthenticated(User.self)
         return Author.query(on: request).all()
     }
     

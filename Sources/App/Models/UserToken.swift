@@ -16,7 +16,8 @@ final class UserToken: Codable {
 	var token: String
 	var userId: User.ID
 	
-	init(token:String, userId: User.ID) {
+	init(id:Int? = nil,token:String, userId: User.ID) {
+		self.id = id
 		self.token = token
 		self.userId = userId
 	}
@@ -69,6 +70,13 @@ extension UserToken: Authentication.Token {
 	typealias UserIDType = User.ID
 }
 
-// Allows `UserToken` to be used as a dynamic migration.
-extension UserToken: Migration { }
+// Allows `UserToken` to be used as a dynamic migration. Adds foreign key
+extension UserToken: Migration {
+	static func prepare(on conn: PostgreSQLConnection) -> Future<Void> {
+		return Database.create(self, on: conn) { (builder) in
+			try addProperties(to: builder)
+			builder.reference(from: \.userId, to: \User.id)
+		}
+	}
+}
 

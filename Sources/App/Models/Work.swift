@@ -16,15 +16,10 @@ final class Work: Codable {
     var title: String
     var authorId: Author.ID
     
-    var createdAt: Date?
-    var updatedAt: Date?
-    
     init(workId:Int? = nil, title:String, authorId:Author.ID) {
         self.workId = workId
         self.title = title
         self.authorId = authorId
-        self.createdAt = Date()
-        self.updatedAt = Date()
     }
 }
 
@@ -50,7 +45,7 @@ extension Work: Validatable {
     }
 }
 
-// Allows `Work` to be used as a dynamic migration.
+// Allows `Work` to be used as a dynamic migration. Adds the foreign key
 extension Work: Migration {
     static func prepare(on conn: PostgreSQLConnection) -> Future<Void> {
         return Database.create(self, on: conn) { (builder) in

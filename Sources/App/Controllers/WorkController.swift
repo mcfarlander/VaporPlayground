@@ -16,7 +16,8 @@ final class WorkController: RouteCollection {
     /// - Parameter router: the application router
     /// - Throws: any error when defining the routes
     func boot(router: Router) throws {
-        let works = router.grouped("works")
+		
+        let works = router.grouped(tokenAuthMiddleware).grouped("works")
         
         works.get(use: list)
         works.get(Work.parameter, use: show)
