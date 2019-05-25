@@ -19,18 +19,18 @@ import SwiftyBeaverProvider
 /// - Throws: any error during startup
 public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
     
-    // Register providers first
+    // Register PostreSQL provider
     try services.register(FluentPostgreSQLProvider())
-	
-	//// Command Config
-	var commandsConfig = CommandConfig.default()
-	commands(config: &commandsConfig)
-	services.register(commandsConfig)
 	
 	// Register the configured PostgreSQL database
 	var databasesConfig = DatabasesConfig()
 	try databases(config: &databasesConfig)
 	services.register(databasesConfig)
+	
+	//// Command Config
+	var commandsConfig = CommandConfig.default()
+	commands(config: &commandsConfig)
+	services.register(commandsConfig)
 	
 	// Register middleware
 	var middlewaresConfig = MiddlewareConfig()
@@ -51,7 +51,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 
     // Configure SwiftyBeaver (logging)
 	// NOTE: all 3 items MUST be in the swiftybeaver.json file: console, file and platform!
-	//try services.register(SwiftyBeaverProvider())
+	try services.register(SwiftyBeaverProvider())
 	//config.prefer(SwiftyBeaverLogger.self, for: Logger.self)
 	
 	// If not wanting to use the provider, create one dynamically in code shown here
