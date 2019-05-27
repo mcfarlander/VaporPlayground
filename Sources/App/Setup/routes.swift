@@ -25,6 +25,7 @@ public func routes(_ router: Router) throws {
     
     // actual routes defined in the controllers !!!
 	try router.register(collection: PostgresController())
+	try router.register(collection: CacheController())
 	try router.register(collection: UserController())
     try router.register(collection: AuthorController())
     try router.register(collection: WorkController())

@@ -9,7 +9,7 @@ import Authentication
 import FluentPostgreSQL
 import Vapor
 import SwiftyBeaverProvider
-import Redis
+
 
 /// Called before your application initializes.
 ///
@@ -27,9 +27,6 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 	var databasesConfig = DatabasesConfig()
 	try databases(config: &databasesConfig)
 	services.register(databasesConfig)
-	
-	// register Redis provider
-	try services.register(RedisProvider())
 	
 	//// Command Config
 	var commandsConfig = CommandConfig.default()
