@@ -2,7 +2,7 @@
 //  Work.swift
 //  App
 //
-//  Created by iMac 21inch on 3/10/19.
+//  Created by Dave Johnson on 3/10/19.
 //
 
 import Foundation

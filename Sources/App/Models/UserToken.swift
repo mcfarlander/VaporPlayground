@@ -2,7 +2,7 @@
 //  UserToken.swift
 //  App
 //
-//  Created by iMac 21inch on 4/13/19.
+//  Created by Dave Johnson on 4/13/19.
 //
 
 import Foundation
