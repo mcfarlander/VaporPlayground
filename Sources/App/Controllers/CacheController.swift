@@ -31,9 +31,10 @@ final class CacheController: RouteCollection {
 	/// - Parameter request: the request
 	/// - Returns: the database version view
 	/// - Throws: any error
-	func getCache(_ request: Request) throws -> HTTPStatus {
+	func getCache(_ request: Request) throws -> Future<String> {
 		
-		return HTTPStatus.ok
+		return try request.make(KeyedCache.self).get(self.cacheKeyDate, as: String.self)
+			.unwrap(or: Abort(.badRequest, reason: "No date set in cache."))
 		
 	}
 	
@@ -42,15 +43,15 @@ final class CacheController: RouteCollection {
 	/// - Parameter request: the request
 	/// - Returns: the database version view
 	/// - Throws: any error
-	func setCache(_ request: Request) throws -> HTTPStatus {
+	func setCache(_ request: Request) throws -> Future<HTTPStatus> {
+
+		let dateformatter = DateFormatter()
+		dateformatter.dateStyle = .short
+		dateformatter.timeStyle = .short
+		let nowString = dateformatter.string(from: Date())
 		
-//		let dateformatter = DateFormatter()
-//		dateformatter.dateStyle = .short
-//		dateformatter.timeStyle = .short
-//		let nowString = dateformatter.string(from: Date())
-		
-		return HTTPStatus.ok
-		
+		return try request.make(KeyedCache.self).set(self.cacheKeyDate, to: nowString).transform(to: .ok)
+
 	}
 	
 }
