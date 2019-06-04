@@ -24,6 +24,8 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     try services.register(FluentPostgreSQLProvider())
 	try services.register(AuthenticationProvider())
 	
+	services.register(RequestLogger())
+	
 	// Configure SwiftyBeaver (logging)
 	// NOTE: all 3 items MUST be in the swiftybeaver.json file: console, file and platform!
 	try services.register(SwiftyBeaverProvider())
@@ -44,22 +46,22 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 	//    // Register the logger
 	//    services.register(SwiftyBeaverLogger(destinations: [console, file]), as: Logger.self)
 	
-	// Register the configured PostgreSQL and Redis database
+	// Register the configured PostgreSQL
 	var databasesConfig = DatabasesConfig()
 	try databases(config: &databasesConfig)
 	services.register(databasesConfig)
 	
-	//// Command Config
+	//// Register and configure the Command Config
 	var commandsConfig = CommandConfig.default()
 	commands(config: &commandsConfig)
 	services.register(commandsConfig)
 	
-	// Register middleware
+	// Register and configure the middleware
 	var middlewaresConfig = MiddlewareConfig()
 	try middlewares(config: &middlewaresConfig)
 	services.register(middlewaresConfig)
 	
-	// Configure migrations
+	// Register and configure the migrations
 	services.register { container -> MigrationConfig in
 		var migrationConfig = MigrationConfig()
 		try migrate(migrations: &migrationConfig)
