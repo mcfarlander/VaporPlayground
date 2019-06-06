@@ -17,7 +17,6 @@ public func migrate(migrations: inout MigrationConfig) throws {
 	
 	migrations.add(model: User.self, database: .psql)
 	migrations.add(model: UserToken.self, database: .psql)
-	migrations.add(model: UserToken.self, database: .psql)
 	migrations.add(model: Author.self, database: .psql)
 	migrations.add(model: Work.self, database: .psql)
 

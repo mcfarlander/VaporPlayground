@@ -15,8 +15,8 @@ import Vapor
 /// - Throws: any errors
 public func middlewares(config: inout MiddlewareConfig) throws {
 	
-	config.use(FileMiddleware.self) // Serves files from `Public/` directory
-	config.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
-	config.use(RequestLogger.self)
+	config.use(FileMiddleware.self) 	// Serves files from `Public/` directory
+	config.use(ErrorMiddleware.self) 	// Catches errors and converts to HTTP response
+	config.use(RequestLogger.self) 		// Logs all requests via SwiftyBeaver
 
 }

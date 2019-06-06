@@ -51,6 +51,13 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 	try databases(config: &databasesConfig)
 	services.register(databasesConfig)
 	
+	// Register and configure the database migrations
+	services.register { container -> MigrationConfig in
+		var migrationConfig = MigrationConfig()
+		try migrate(migrations: &migrationConfig)
+		return migrationConfig
+	}
+	
 	//// Register and configure the Command Config
 	var commandsConfig = CommandConfig.default()
 	commands(config: &commandsConfig)
@@ -61,12 +68,6 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 	try middlewares(config: &middlewaresConfig)
 	services.register(middlewaresConfig)
 	
-	// Register and configure the migrations
-	services.register { container -> MigrationConfig in
-		var migrationConfig = MigrationConfig()
-		try migrate(migrations: &migrationConfig)
-		return migrationConfig
-	}
 	
     // Register routes to the router
     let router = EngineRouter.default()
