@@ -58,6 +58,7 @@ final class WorkController: RouteCollection {
     /// - Throws: any error
     func create(_ request: Request, work:Work) throws -> Future<Work> {
 		_ = try request.requireAuthenticated(User.self)
+		try work.validate()
         return work.save(on: request)
     }
     

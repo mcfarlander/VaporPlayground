@@ -57,6 +57,7 @@ final class AuthorController: RouteCollection {
     /// - Throws: any error
     func create(_ request: Request, author:Author) throws -> Future<Author> {
 		_ = try request.requireAuthenticated(User.self)
+		try author.validate()
         return author.save(on: request)
     }
     
