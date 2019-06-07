@@ -35,6 +35,16 @@ extension User {
 	}
 }
 
+extension User: Validatable {
+	/// See `Validatable`.
+	static func validations() throws -> Validations<User> {
+		var validations = Validations(User.self)
+		try validations.add(\.username, .count(1...))
+		try validations.add(\.password, .count(1...))
+		return validations
+	}
+}
+
 extension User: PasswordAuthenticatable {
 	static var usernameKey: WritableKeyPath<User, String> {
 		return \User.username

@@ -3,38 +3,38 @@
 <plist version="1.0">
 <dict>
 	<key>baseURL</key>
-	<string>http://localhost:8080/users/create</string>
+	<string>http://localhost:8080/headers</string>
 	<key>followRedirect</key>
 	<true/>
 	<key>handleJSONPCallbacks</key>
 	<false/>
 	<key>headers</key>
-	<array/>
+	<array>
+		<dict>
+			<key>header</key>
+			<string>foo</string>
+			<key>inUse</key>
+			<true/>
+			<key>value</key>
+			<string>bar</string>
+		</dict>
+		<dict>
+			<key>header</key>
+			<string>iron</string>
+			<key>inUse</key>
+			<true/>
+			<key>value</key>
+			<string>man</string>
+		</dict>
+	</array>
 	<key>httpMethod</key>
-	<string>POST</string>
+	<string>GET</string>
 	<key>jsonpScript</key>
 	<string></string>
 	<key>paramBodyUIChoice</key>
 	<integer>0</integer>
 	<key>parameters</key>
-	<array>
-		<dict>
-			<key>inUse</key>
-			<true/>
-			<key>parameter</key>
-			<string>username</string>
-			<key>value</key>
-			<string>spock</string>
-		</dict>
-		<dict>
-			<key>inUse</key>
-			<true/>
-			<key>parameter</key>
-			<string>password</string>
-			<key>value</key>
-			<string>password1</string>
-		</dict>
-	</array>
+	<array/>
 	<key>parametersType</key>
 	<integer>1</integer>
 	<key>presentBeforeChallenge</key>

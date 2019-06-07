@@ -3,13 +3,22 @@
 <plist version="1.0">
 <dict>
 	<key>baseURL</key>
-	<string>http://localhost:8080/users/create</string>
+	<string>http://localhost:8080/authors</string>
 	<key>followRedirect</key>
 	<true/>
 	<key>handleJSONPCallbacks</key>
 	<false/>
 	<key>headers</key>
-	<array/>
+	<array>
+		<dict>
+			<key>header</key>
+			<string>Authorization</string>
+			<key>inUse</key>
+			<true/>
+			<key>value</key>
+			<string>Bearer m2HT3pYW9UEbqFEJbZDgC8l3YJNPzu!LiZHBCEXY6WHk06RZXFymeEVwLBuY</string>
+		</dict>
+	</array>
 	<key>httpMethod</key>
 	<string>POST</string>
 	<key>jsonpScript</key>
@@ -22,17 +31,25 @@
 			<key>inUse</key>
 			<true/>
 			<key>parameter</key>
-			<string>username</string>
+			<string>firstName</string>
 			<key>value</key>
-			<string>spock</string>
+			<string>Fred</string>
 		</dict>
 		<dict>
 			<key>inUse</key>
 			<true/>
 			<key>parameter</key>
-			<string>password</string>
+			<string>lastName</string>
 			<key>value</key>
-			<string>password1</string>
+			<string>Saberhagen</string>
+		</dict>
+		<dict>
+			<key>inUse</key>
+			<true/>
+			<key>parameter</key>
+			<string>authorId</string>
+			<key>value</key>
+			<string>3</string>
 		</dict>
 	</array>
 	<key>parametersType</key>

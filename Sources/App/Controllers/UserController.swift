@@ -28,6 +28,7 @@ final class UserController: RouteCollection {
 	/// - Throws: any error
 	func create(_ request: Request) throws -> Future<PublicUser> {
 		return try request.content.decode(User.self).flatMap(to: PublicUser.self) { user in
+			try user.validate()
 			let passwordHashed = try request.make(BCryptDigest.self).hash(user.password)
 			let newUser = User(username: user.username, password: passwordHashed)
 			return newUser.save(on: request).flatMap(to: PublicUser.self) { createdUser in
