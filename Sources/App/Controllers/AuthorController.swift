@@ -56,9 +56,14 @@ final class AuthorController: RouteCollection {
     /// - Returns: the author from the ORM
     /// - Throws: any error
     func create(_ request: Request, author:Author) throws -> Future<Author> {
+		
 		_ = try request.requireAuthenticated(User.self)
-		try author.validate()
-        return author.save(on: request)
+		
+		return try request.content.decode(Author.self).flatMap(to: Author.self) { author in
+			try author.validate()
+			let newAuthor = Author(firstName: author.firstName, lastName: author.lastName)
+			return newAuthor.save(on: request)
+		}
     }
     
     /// Put an author to the ORM.

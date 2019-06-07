@@ -12,12 +12,12 @@ import Vapor
 /// Author model, with children of type Work.
 /// Author is a PostgreSQL table in the Book database.
 final class Author:Codable {
-    var authorId: Int?
+    var id: Int?
     var firstName: String
     var lastName: String
     
-    init(authorId:Int? = nil, firstName:String, lastName:String) {
-        self.authorId = authorId
+    init(id:Int? = nil, firstName:String, lastName:String) {
+        self.id = id
         self.firstName = firstName
         self.lastName = lastName
     }
@@ -26,7 +26,7 @@ final class Author:Codable {
 extension Author: Model {
     typealias Database = PostgreSQLDatabase
     typealias ID = Int
-    static let idKey: IDKey = \Author.authorId
+    static let idKey: IDKey = \Author.id
 }
 
 extension Author {
@@ -48,7 +48,14 @@ extension Author: Validatable {
 }
 
 // Allows `Author` to be used as a dynamic migration.
-extension Author: Migration { }
+extension Author: Migration {
+	static func prepare(on conn: PostgreSQLConnection) -> Future<Void> {
+		return Database.create(self, on: conn) { (builder) in
+			try addProperties(to: builder)
+		}
+	}
+}
+
 /// Allows `Author` to be encoded to and decoded from HTTP messages.
 extension Author: Content { }
 /// Allows `Author` to be used as a dynamic parameter in route definitions.

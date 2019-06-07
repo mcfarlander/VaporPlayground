@@ -12,12 +12,12 @@ import Vapor
 /// Work model, with parent of type Author.
 /// Work is a PostgreSQL table in the Book database.
 final class Work: Codable {
-    var workId: Int?
+    var id: Int?
     var title: String
     var authorId: Author.ID
     
-    init(workId:Int? = nil, title:String, authorId:Author.ID) {
-        self.workId = workId
+    init(id:Int? = nil, title:String, authorId:Author.ID) {
+        self.id = id
         self.title = title
         self.authorId = authorId
     }
@@ -26,7 +26,7 @@ final class Work: Codable {
 extension Work: Model {
     typealias Database = PostgreSQLDatabase
     typealias ID = Int
-    static let idKey: IDKey = \Work.workId
+    static let idKey: IDKey = \Work.id
 }
 
 extension Work {
@@ -50,7 +50,7 @@ extension Work: Migration {
     static func prepare(on conn: PostgreSQLConnection) -> Future<Void> {
         return Database.create(self, on: conn) { (builder) in
             try addProperties(to: builder)
-            builder.reference(from: \.authorId, to: \Author.authorId)
+            builder.reference(from: \.authorId, to: \Author.id)
         }
     }
 }

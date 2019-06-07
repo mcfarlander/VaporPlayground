@@ -58,8 +58,13 @@ final class WorkController: RouteCollection {
     /// - Throws: any error
     func create(_ request: Request, work:Work) throws -> Future<Work> {
 		_ = try request.requireAuthenticated(User.self)
-		try work.validate()
-        return work.save(on: request)
+		
+		return try request.content.decode(Work.self).flatMap(to: Work.self) { work in
+			try work.validate()
+			let newWork = Work(title: work.title, authorId: work.authorId)
+			return newWork.save(on: request)
+		}
+		
     }
     
     /// Put an work to the ORM.
