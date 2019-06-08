@@ -77,6 +77,7 @@ final class WorkController: RouteCollection {
     func update(_ request: Request) throws -> Future<Work> {
 		_ = try request.requireAuthenticated(User.self)
         return try flatMap(to: Work.self, request.parameters.next(Work.self), request.content.decode(Work.self)) { (work, updatedWork) in
+			try updatedWork.validate()
             work.title = updatedWork.title
             work.authorId = updatedWork.authorId
             return work.save(on: request)

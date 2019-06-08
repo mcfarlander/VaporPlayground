@@ -74,7 +74,8 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     try routes(router)
     services.register(router, as: Router.self)
 	
-	// Use KeyedCache, in-memory
+	// Use KeyedCache, in-memory, ONLY FOR DEVELOPMENT
+	// Install Redis for a more complete cache/mq system
 	config.prefer(MemoryKeyedCache.self, for: KeyedCache.self)
     
 }
