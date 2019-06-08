@@ -12,6 +12,7 @@ import Vapor
 /// Author model, with children of type Work.
 /// Author is a PostgreSQL table in the Book database.
 final class Author:Codable {
+	
     var id: Int?
     var firstName: String
     var lastName: String
@@ -23,18 +24,21 @@ final class Author:Codable {
     }
 }
 
+// MARK: - Author extends Model for PostgreSQL.
 extension Author: Model {
     typealias Database = PostgreSQLDatabase
     typealias ID = Int
     static let idKey: IDKey = \Author.id
 }
 
+// MARK: - Author has child object ob type Work.
 extension Author {
     var works: Children<Author, Work> {
         return children(\.authorId)
     }
 }
 
+// MARK: - Author can be validated.
 extension Author: Validatable {
     /// See `Validatable`.
     static func validations() throws -> Validations<Author> {
@@ -58,5 +62,6 @@ extension Author: Migration {
 
 /// Allows `Author` to be encoded to and decoded from HTTP messages.
 extension Author: Content { }
+
 /// Allows `Author` to be used as a dynamic parameter in route definitions.
 extension Author: Parameter { }

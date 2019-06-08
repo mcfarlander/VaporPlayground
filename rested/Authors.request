@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>baseURL</key>
-	<string>http://localhost:8080/authors</string>
+	<string>http://localhost:8080/authors/1/works</string>
 	<key>followRedirect</key>
 	<true/>
 	<key>handleJSONPCallbacks</key>
@@ -16,7 +16,7 @@
 			<key>inUse</key>
 			<true/>
 			<key>value</key>
-			<string>Bearer m2HT3pYW9UEbqFEJbZDgC8l3YJNPzu!LiZHBCEXY6WHk06RZXFymeEVwLBuY</string>
+			<string>Bearer StP84tZGnCHiZzPCdPH0oa$43G2oDvreoDeZ5hdFlFgAEvM8TnqzH$LtSnAG</string>
 		</dict>
 	</array>
 	<key>httpMethod</key>

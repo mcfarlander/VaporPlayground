@@ -67,7 +67,7 @@ final class AuthorController: RouteCollection {
     }
     
     /// Put an author to the ORM.
-    ///
+    /// 
     /// - Parameters:
     ///   - request: the request
     ///   - body: the request body author to update

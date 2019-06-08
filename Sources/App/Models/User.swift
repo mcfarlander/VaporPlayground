@@ -10,6 +10,8 @@ import Vapor
 import FluentPostgreSQL
 import Authentication
 
+/// User model, with children of type UserToken.
+/// User is a PostgreSQL table in the Book database.
 final class User: Codable {
 	
     var id: Int?
@@ -23,18 +25,21 @@ final class User: Codable {
 	}
 }
 
+// MARK: - User extends Model for PostgreSQL.
 extension User: Model {
     typealias Database = PostgreSQLDatabase
     typealias ID = Int
     static let idKey: IDKey = \User.id
 }
 
+// MARK: - User has child objects of type UserToken.
 extension User {
 	var tokens: Children<User, UserToken> {
 		return children(\.id)
 	}
 }
 
+// MARK: - User can validated.
 extension User: Validatable {
 	/// See `Validatable`.
 	static func validations() throws -> Validations<User> {
@@ -45,6 +50,7 @@ extension User: Validatable {
 	}
 }
 
+// MARK: - User can be used to authenticate on username and password.
 extension User: PasswordAuthenticatable {
 	static var usernameKey: WritableKeyPath<User, String> {
 		return \User.username
@@ -55,6 +61,7 @@ extension User: PasswordAuthenticatable {
 	}
 }
 
+// MARK: - User can be authenticated on the user's token.
 extension User: TokenAuthenticatable {
 	typealias TokenType = UserToken
 }

@@ -12,6 +12,7 @@ import Vapor
 /// Work model, with parent of type Author.
 /// Work is a PostgreSQL table in the Book database.
 final class Work: Codable {
+	
     var id: Int?
     var title: String
     var authorId: Author.ID
@@ -23,18 +24,21 @@ final class Work: Codable {
     }
 }
 
+// MARK: - Work extends Model for PostgreSQL.
 extension Work: Model {
     typealias Database = PostgreSQLDatabase
     typealias ID = Int
     static let idKey: IDKey = \Work.id
 }
 
+// MARK: - Work has a parent object of type Author.
 extension Work {
     var author: Parent<Work, Author> {
         return parent(\.authorId)
     }
 }
 
+// MARK: - Work can validated.
 extension Work: Validatable {
     /// See `Validatable`.
     static func validations() throws -> Validations<Work> {
