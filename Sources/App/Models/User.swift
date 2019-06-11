@@ -73,9 +73,11 @@ extension User: Content { }
 /// Allows `User` to be used as a dynamic parameter in route definitions.
 extension User: Parameter { }
 
+/// The user object to present back as a response to creating a user and logging in.
 struct PublicUser: Content {
 	var username: String
 	var token: String
+	var expires: Int
 }
 
 /// Global - Use user model to create an authentication middleware

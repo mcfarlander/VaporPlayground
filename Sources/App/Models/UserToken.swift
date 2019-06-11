@@ -16,11 +16,13 @@ final class UserToken: Codable {
 	
 	var id: Int?
 	var token: String
+	var expires: Int
 	var userId: User.ID
 	
-	init(id:Int? = nil,token:String, userId: User.ID) {
+	init(id:Int? = nil,token:String, expires:Int, userId: User.ID) {
 		self.id = id
 		self.token = token
+		self.expires = expires
 		self.userId = userId
 	}
 	
@@ -49,8 +51,11 @@ extension UserToken {
 	/// - Returns: the new UserToken generated
 	/// - Throws: any error
 	static func createToken(forUser user: User) throws -> UserToken {
+		
 		let tokenString = randomToken(withLength: 60)
-		let newToken = try UserToken(token: tokenString, userId: user.requireID())
+		let expires = dateDaysFromNow(add: 100)
+		
+		let newToken = try UserToken(token: tokenString, expires: expires, userId: user.requireID())
 		return newToken
 	}
 	
@@ -70,6 +75,16 @@ extension UserToken {
 		}
 		return randomString
 	}
+	
+	/// Determine the date x days from now and then return the time interval since 1970.
+	///
+	/// - Parameter days: the days to add to the current date
+	/// - Returns: the integer value of the calculated date since 1970
+	private static func dateDaysFromNow(add days:Int) -> Int {
+		let today = Date()
+		return Int(Calendar.current.date(byAdding: .day, value: days, to: today)!.timeIntervalSince1970)
+	}
+	
 }
 
 // MARK: - UserToken can be used to authentication using the token.

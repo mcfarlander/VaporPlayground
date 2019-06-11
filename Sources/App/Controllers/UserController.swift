@@ -34,7 +34,7 @@ final class UserController: RouteCollection {
 			return newUser.save(on: request).flatMap(to: PublicUser.self) { createdUser in
 				let accessToken = try UserToken.createToken(forUser: createdUser)
 				return accessToken.save(on: request).map(to: PublicUser.self) { createdToken in
-					let publicUser = PublicUser(username: createdUser.username, token: createdToken.token)
+					let publicUser = PublicUser(username: createdUser.username, token: createdToken.token, expires: createdToken.expires)
 					return publicUser
 				}
 			}
@@ -55,7 +55,7 @@ final class UserController: RouteCollection {
 			return User.authenticate(username: user.username, password: user.password, using: passwordVerifier, on: request).unwrap(or: Abort.init(HTTPResponseStatus.unauthorized)).flatMap(to: PublicUser.self) {authorized in
 				// if authenticated get the first token for the this user and return the public user object
 				return try authorized.tokens.query(on: request).first().map(to: PublicUser.self) {usertoken in
-					return PublicUser(username: user.username, token: usertoken!.token)
+					return PublicUser(username: user.username, token: usertoken!.token, expires: usertoken!.expires)
 				}
 			}
 		}
