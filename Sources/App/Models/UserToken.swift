@@ -85,6 +85,16 @@ extension UserToken {
 		return Int(Calendar.current.date(byAdding: .day, value: days, to: today)!.timeIntervalSince1970)
 	}
 	
+	/// Determine if the expires value has expired. That is, is it beyond the current date.
+	///
+	/// - Parameter expires: the time interval since 1970
+	/// - Returns: the time interval is beyon the current date
+	static func hasTokenExpired(expires:Int) -> Bool {
+		
+		let nowSince1970 = Int(Date().timeIntervalSince1970)
+		return expires < nowSince1970
+	}
+	
 }
 
 // MARK: - UserToken can be used to authentication using the token.
