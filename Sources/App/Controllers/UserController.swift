@@ -13,6 +13,7 @@ import Authentication
 final class UserController: RouteCollection {
     
     func boot(router: Router) throws {
+		
         let users = router.grouped("users")
         
 		users.post("create", use: create)
@@ -57,6 +58,9 @@ final class UserController: RouteCollection {
 				// when checking against the expires token, use all() rather than first() and loop through values
 				// if not found, then return unauthorized
 				return try authorized.tokens.query(on: request).first().map(to: PublicUser.self) {usertoken in
+					// on successful login, extend the token?
+					// usertoken?.expires = UserToken.expireDaysFromNow(add: UserToken.TOKEN_EXPIRE_DAYS)
+					//_ = usertoken?.save(on: request)
 					return PublicUser(username: user.username, token: usertoken!.token, expires: usertoken!.expires)
 				}
 			}

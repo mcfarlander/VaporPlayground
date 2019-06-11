@@ -45,6 +45,9 @@ extension UserToken {
 // MARK: - Helper methods on UserToken for creating a token.
 extension UserToken {
 	
+	/// The standard time to extend a token.
+	static let TOKEN_EXPIRE_DAYS = 100
+	
 	/// Creates a new token for the user.
 	///
 	/// - Parameter user: the User being used for creation
@@ -53,7 +56,7 @@ extension UserToken {
 	static func createToken(forUser user: User) throws -> UserToken {
 		
 		let tokenString = randomToken(withLength: 60)
-		let expires = dateDaysFromNow(add: 100)
+		let expires = expireDaysFromNow(add: TOKEN_EXPIRE_DAYS)
 		
 		let newToken = try UserToken(token: tokenString, expires: expires, userId: user.requireID())
 		return newToken
@@ -80,7 +83,7 @@ extension UserToken {
 	///
 	/// - Parameter days: the days to add to the current date
 	/// - Returns: the integer value of the calculated date since 1970
-	private static func dateDaysFromNow(add days:Int) -> Int {
+	static func expireDaysFromNow(add days:Int) -> Int {
 		let today = Date()
 		return Int(Calendar.current.date(byAdding: .day, value: days, to: today)!.timeIntervalSince1970)
 	}
