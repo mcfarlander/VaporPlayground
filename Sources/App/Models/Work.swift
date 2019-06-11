@@ -49,7 +49,7 @@ extension Work: Validatable {
     }
 }
 
-// Allows `Work` to be used as a dynamic migration. Adds the foreign key
+// Allows `Work` to be used as a dynamic migration. Adds the foreign key.
 extension Work: Migration {
     static func prepare(on conn: PostgreSQLConnection) -> Future<Void> {
         return Database.create(self, on: conn) { (builder) in

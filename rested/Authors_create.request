@@ -16,7 +16,7 @@
 			<key>inUse</key>
 			<true/>
 			<key>value</key>
-			<string>Bearer m2HT3pYW9UEbqFEJbZDgC8l3YJNPzu!LiZHBCEXY6WHk06RZXFymeEVwLBuY</string>
+			<string>Bearer HGxaUKnKyV!psiY2cteRxR5u2bkO$jgeUAajBtT0j2SQGjq6GMBC4u$U9oY3</string>
 		</dict>
 	</array>
 	<key>httpMethod</key>
@@ -33,7 +33,7 @@
 			<key>parameter</key>
 			<string>firstName</string>
 			<key>value</key>
-			<string>Fred</string>
+			<string>Roger</string>
 		</dict>
 		<dict>
 			<key>inUse</key>
@@ -41,15 +41,7 @@
 			<key>parameter</key>
 			<string>lastName</string>
 			<key>value</key>
-			<string>Saberhagen</string>
-		</dict>
-		<dict>
-			<key>inUse</key>
-			<true/>
-			<key>parameter</key>
-			<string>authorId</string>
-			<key>value</key>
-			<string>3</string>
+			<string>Zelazny</string>
 		</dict>
 	</array>
 	<key>parametersType</key>

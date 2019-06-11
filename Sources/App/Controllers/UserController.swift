@@ -54,6 +54,8 @@ final class UserController: RouteCollection {
 			// authenticate on the user name and pasword
 			return User.authenticate(username: user.username, password: user.password, using: passwordVerifier, on: request).unwrap(or: Abort.init(HTTPResponseStatus.unauthorized)).flatMap(to: PublicUser.self) {authorized in
 				// if authenticated get the first token for the this user and return the public user object
+				// when checking against the expires token, use all() rather than first() and loop through values
+				// if not found, then return unauthorized
 				return try authorized.tokens.query(on: request).first().map(to: PublicUser.self) {usertoken in
 					return PublicUser(username: user.username, token: usertoken!.token, expires: usertoken!.expires)
 				}
