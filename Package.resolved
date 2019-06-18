@@ -83,6 +83,15 @@
         }
       },
       {
+        "package": "Leaf",
+        "repositoryURL": "https://github.com/vapor/leaf.git",
+        "state": {
+          "branch": null,
+          "revision": "d35f54cbac723e673f9bd5078361eea74049c8d7",
+          "version": "3.0.2"
+        }
+      },
+      {
         "package": "Multipart",
         "repositoryURL": "https://github.com/vapor/multipart.git",
         "state": {
@@ -98,15 +107,6 @@
           "branch": null,
           "revision": "41cec2846f9cdd8233675da0d256efa3b8d62b21",
           "version": "1.4.1"
-        }
-      },
-      {
-        "package": "Redis",
-        "repositoryURL": "https://github.com/vapor/redis.git",
-        "state": {
-          "branch": null,
-          "revision": "e54d03380405e22e77b71767a40d5c2d3f1e8767",
-          "version": "3.3.1"
         }
       },
       {

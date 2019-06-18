@@ -7,6 +7,7 @@
 
 import Authentication
 import FluentPostgreSQL
+import Leaf
 import SwiftyBeaverProvider
 import Vapor
 
@@ -23,6 +24,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     // Register PostreSQL provider
     try services.register(FluentPostgreSQLProvider())
 	try services.register(AuthenticationProvider())
+	try services.register(LeafProvider())
 	
 	services.register(RequestLogger())
 	
@@ -68,11 +70,13 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 	try middlewares(config: &middlewaresConfig)
 	services.register(middlewaresConfig)
 	
-	
     // Register routes to the router
     let router = EngineRouter.default()
     try routes(router)
     services.register(router, as: Router.self)
+	
+	// Register Leaf as the view renderer
+	config.prefer(LeafRenderer.self, for: ViewRenderer.self)
 	
 	// Use KeyedCache, in-memory, ONLY FOR DEVELOPMENT
 	// Install Redis for a more complete cache/mq system

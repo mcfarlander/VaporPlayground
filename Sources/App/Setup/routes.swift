@@ -22,6 +22,11 @@ public func routes(_ router: Router) throws {
     router.get("hello") { req in
         return "Hello, world!"
     }
+	
+	// Basic view example
+	router.get("home") { req -> Future<View> in
+		return try req.view().render("home")
+	}
     
     // actual routes defined in the controllers !!!
 	try router.register(collection: PostgresController())
