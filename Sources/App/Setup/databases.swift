@@ -14,22 +14,36 @@ import Vapor
 /// - Throws: any error
 public func databases(config: inout DatabasesConfig) throws {
 	
-	// Configure a Postgres database
-	// TODO: change the config to an external JSON file!
-	let configDatabase = PostgreSQLDatabaseConfig(
-		hostname: "localhost",
-		port: 5432,
-		username: "postgres",
-		database: "book",
-		password: "postgres",
-		transport: .cleartext)
+	// looking for a json file at the working path  ./Config/postgres.json
+	let directory = DirectoryConfig.detect()
+	let configDir = "Config"
+	let configFile = "postgres.json"
 	
-	//	let configPostgresUrl = URL(fileURLWithPath: directory.workDir)
-	//		.appendingPathComponent(configDir, isDirectory: true).appendingPathComponent("postgres.json").path
-	//
-	//	let configPostgres = PostgreSQLDatabaseConfig(url: configPostgresUrl, transport: .cleartext)
-	let postgres = PostgreSQLDatabase(config: configDatabase)
+	do {
+		let data = try Data(contentsOf: URL(fileURLWithPath: directory.workDir)
+			.appendingPathComponent(configDir, isDirectory: true)
+			.appendingPathComponent(configFile, isDirectory: false))
+		
+		let pgConfig = try JSONDecoder().decode(PgDbConfig.self, from: data)
+		
+		// Configure a Postgres database
+		let configDatabase = PostgreSQLDatabaseConfig(
+			hostname: pgConfig.host!,
+			port: pgConfig.port!,
+			username: pgConfig.user!,
+			database: pgConfig.database!,
+			password: pgConfig.password!,
+			transport: .cleartext)
+		
+		//	let configPostgres = PostgreSQLDatabaseConfig(url: configPostgresUrl, transport: .cleartext)
+		let postgres = PostgreSQLDatabase(config: configDatabase)
+		
+		config.add(database: postgres, as: .psql)
+		
+		
+	} catch {
+		print(error)
+	}
 	
-	config.add(database: postgres, as: .psql)
 	
 }
